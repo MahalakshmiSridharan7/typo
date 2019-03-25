@@ -55,6 +55,13 @@ And /^I am logged into the admin panel$/ do
   end
 end
 
+Given /^A sample category is setup$/ do
+  Category.create!({name: "sample-cat",
+                    keywords: "sample-keyword",
+                    permalink: "some perma",
+                    description: "Sample Desc"})
+end
+
 # Single-line step scoper
 When /^(.*) within (.*[^:])$/ do |step, parent|
   with_scope(parent) { When step }
