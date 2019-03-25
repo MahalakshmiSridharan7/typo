@@ -1,0 +1,76 @@
+Using the default profile...
+Feature: Test Category
+  As a blog administrator
+  In order to group my blogs, I need categories
+  I want to be able to view, edit and create categories
+
+  Background:                            # features/category.feature:6
+    Given the blog is set up             # features/step_definitions/web_steps.rb:34
+    And I am logged into the admin panel # features/step_definitions/web_steps.rb:46
+
+  Scenario:                                                      # features/category.feature:10
+    Given I am on the category page                              # features/step_definitions/web_steps.rb:75
+    When I fill in "category_name" with "CatName"                # features/step_definitions/web_steps.rb:91
+    And I fill in "category_keywords" with "CatKey"              # features/step_definitions/web_steps.rb:91
+    And I fill in "category_permalink" with "TestPerma"          # features/step_definitions/web_steps.rb:91
+    And I fill in "category_description" with "Some description" # features/step_definitions/web_steps.rb:91
+    And I press "Save"                                           # features/step_definitions/web_steps.rb:83
+    Then I should see "CatName"                                  # features/step_definitions/web_steps.rb:136
+    And I should be on the category page                         # features/step_definitions/web_steps.rb:261
+
+  Scenario:                                                         # features/category.feature:20
+    Given A sample category is setup                                # features/step_definitions/web_steps.rb:58
+    And I am on the category page                                   # features/step_definitions/web_steps.rb:75
+    When I follow "Edit"                                            # features/step_definitions/web_steps.rb:87
+    And I fill in "category_description" with "Updated description" # features/step_definitions/web_steps.rb:91
+    And I press "Save"                                              # features/step_definitions/web_steps.rb:83
+    Then I should see "Updated description"                         # features/step_definitions/web_steps.rb:136
+    And I should be on the category page                            # features/step_definitions/web_steps.rb:261
+
+  Scenario:                                                          # features/category.feature:29
+    Given A sample category is setup                                 # features/step_definitions/web_steps.rb:58
+    And I am on the category edit page for "sample-cat"              # features/step_definitions/web_steps.rb:75
+    When I fill in "category_description" with "Updated description" # features/step_definitions/web_steps.rb:91
+    And I press "Save"                                               # features/step_definitions/web_steps.rb:83
+    Then I should see "Updated description"                          # features/step_definitions/web_steps.rb:136
+    And I should be on the category page                             # features/step_definitions/web_steps.rb:261
+
+Feature: Create Blog
+  As an author
+  In order to gift my thoughts to the world
+  I want to create a blog
+
+  Scenario: Create blog page shown      # features/create_blog.feature:6
+    Given I am on the home page         # features/step_definitions/web_steps.rb:75
+    Then I should see "Welcome"         # features/step_definitions/web_steps.rb:136
+    And I should see "My Shiny Weblog!" # features/step_definitions/web_steps.rb:136
+
+  Scenario: Create blog page not shown when blog created # features/create_blog.feature:11
+    Given the blog is set up                             # features/step_definitions/web_steps.rb:34
+    When I am on the home page                           # features/step_definitions/web_steps.rb:75
+    Then I should not see "My Shiny Weblog!"             # features/step_definitions/web_steps.rb:154
+    And I should see "Teh Blag"                          # features/step_definitions/web_steps.rb:136
+
+Feature: Write Articles
+  As a blog administrator
+  In order to share my thoughts with the world
+  I want to be able to add articles to my blog
+
+  Background:                            # features/write_article.feature:6
+    Given the blog is set up             # features/step_definitions/web_steps.rb:34
+    And I am logged into the admin panel # features/step_definitions/web_steps.rb:46
+
+  Scenario: Successfully write articles                                  # features/write_article.feature:10
+    Given I am on the new article page                                   # features/step_definitions/web_steps.rb:75
+    When I fill in "article_title" with "Foobar"                         # features/step_definitions/web_steps.rb:91
+    And I fill in "article__body_and_extended_editor" with "Lorem Ipsum" # features/step_definitions/web_steps.rb:91
+    And I press "Publish"                                                # features/step_definitions/web_steps.rb:83
+    Then I should be on the admin content page                           # features/step_definitions/web_steps.rb:261
+    When I go to the home page                                           # features/step_definitions/web_steps.rb:79
+    Then I should see "Foobar"                                           # features/step_definitions/web_steps.rb:136
+    When I follow "Foobar"                                               # features/step_definitions/web_steps.rb:87
+    Then I should see "Lorem Ipsum"                                      # features/step_definitions/web_steps.rb:136
+
+6 scenarios (6 passed)
+45 steps (45 passed)
+0m3.717s
